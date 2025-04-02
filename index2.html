@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú con Indicador de Sección</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            color: #706d82;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu a {
+            color: #706d82;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .menu a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background: #f4c2c2;
+        }
+
+        .section {
+            height: 100vh;
+            padding: 100px 20px;
+        }
+
+        #inicio {
+            background: white;
+        }
+
+        #sobre-mi {
+            background: #f4c2c2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Centra los elementos */
+            padding: 20px;
+            /* Ajusta el padding general */
+        }
+
+        .sobre-mi-content {
+            max-width: 40%;
+            /* Reducimos el max-width para que el texto ocupe menos espacio */
+            margin-right: 20px;
+            /* Espacio entre el texto y la imagen */
+        }
+
+        .sobre-mi-content h2 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .sobre-mi-content p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .sobre-mi-image img {
+            width: 300px;
+            /* Ajustamos el tamaño de la imagen para equilibrar el espacio */
+            height: auto;
+            border-radius: 10px;
+        }
+
+
+
+        #servicios {
+            background: white;
+        }
+
+        #blog {
+            background: #f4c2c2;
+        }
+
+        @media (max-width: 768px) {
+            #sobre-mi {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+                /* Ajuste en el padding para evitar mucho espacio */
+            }
+
+            .sobre-mi-content {
+                max-width: 100%;
+                margin-bottom: 20px;
+                /* Añadimos un pequeño margen abajo */
+            }
+
+            .sobre-mi-image {
+                margin-top: 10px;
+            }
+
+            .sobre-mi-image img {
+                width: 80%;
+                /* Reducción de la imagen para que ocupe menos espacio */
+                max-width: 400px;
+                /* Controlamos el tamaño máximo de la imagen */
+            }
+        }
+
+
+        .services-container {
+            display: flex;
+            justify-content: space-between;
+            /* Distribuye las cajas con espacio entre ellas */
+            gap: 20px;
+            /* Espacio entre las cajas */
+            width: 70%;
+            /* Asegura que ocupe todo el ancho disponible */
+            margin: 0;
+            /* Elimina margen superior e inferior */
+            padding: 0;
+            /* Elimina padding */
+            box-sizing: border-box;
+            /* Asegura que el padding no afecte el ancho total */
+        }
+
+        .service-box {
+            width: 30%;
+            /* Cada caja ocupa el 30% del ancho disponible */
+            padding: 20px;
+            text-align: center;
+            background: #add5ee;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0;
+            /* Elimina el margen de las cajas */
+        }
+
+        .service-box i {
+            font-size: 50px;
+            color: #fff;
+        }
+
+        .service-box h2 {
+            color: #706d82;
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .service-box a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #7cadce;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .services-container {
+                flex-direction: column;
+                /* Cambia la dirección a vertical en pantallas pequeñas */
+                align-items: center;
+            }
+
+            .service-box {
+                width: 80%;
+                /* Cada caja ocupará el 80% del ancho del contenedor en pantallas pequeñas */
+                margin-top: 20px;
+            }
+            .menu {
+                justify-content: space-between;
+                padding: 15px 20px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: white;
+                text-align: center;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .menu-links a {
+                padding: 15px;
+                display: block;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .menu-links.open {
+                display: flex;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="menu">
+        <a href="#inicio" class="menu-link" data-section="inicio">Inicio</a>
+        <a href="#sobre-mi" class="menu-link" data-section="sobre-mi">Sobre Mí</a>
+        <a href="#servicios" class="menu-link" data-section="servicios">Servicios</a>
+        <a href="#blog" class="menu-link" data-section="blog">Blog</a>
+    </nav>
+
+    <div id="inicio" class="section">Inicio</div>
+    <div id="sobre-mi" class="section">
+        <div class="sobre-mi-content">
+            <h2>Sobre Mí</h2>
+            <p>Soy un profesional dedicado a ayudar a las personas a encontrar equilibrio y bienestar en sus vidas. Con
+                años de experiencia en el campo de la psicología, ofrezco un enfoque personalizado para cada individuo.
+            </p>
+        </div>
+        <div class="sobre-mi-image">
+            <img src="/image/IMG_6436-600x800.jpg" alt="Imagen sobre mí">
+        </div>
+    </div>
+
+    <div id="sobre-mi" class="section">
+        <!-- Servicios debajo del texto y la imagen -->
+        <div class="services-container">
+            <div class="service-box">
+                <i class="fitness-heartrate"></i>
+                <h2>Integradora</h2>
+                <a href="https://carlabaeza.com/psicoterapia-integradora/" target="_blank">Más información</a>
+            </div>
+            <div class="service-box">
+                <i class="fitness-heartrate"></i>
+                <h2>Personalizada</h2>
+                <a href="#">Más información</a>
+            </div>
+            <div class="service-box">
+                <i class="fitness-heartrate"></i>
+                <h2>Emocional</h2>
+                <a href="#">Más información</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="servicios" class="section">Servicios</div>
+    <div id="blog" class="section">Blog</div>
+
+    <script>
+        const sections = document.querySelectorAll(".section");
+        const menuLinks = document.querySelectorAll(".menu-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 80;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            menuLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("data-section") === current) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

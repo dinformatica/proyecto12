@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú con Indicador de Sección</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            color: #706d82;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu a {
+            color: #706d82;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .menu a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background: #f4c2c2;
+        }
+
+        .section {
+            height: 100vh;
+            padding: 100px 20px;
+        }
+
+        #inicio {
+            background: white;
+        }
+
+
+        
+
+
+
+        #servicios {
+            background: white;
+        }
+
+        #blog {
+            background: #f4c2c2;
+        }
+
+        @media (max-width: 768px) {
+            #sobre-mi {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+                /* Ajuste en el padding para evitar mucho espacio */
+            }
+
+            .sobre-mi-content {
+                max-width: 100%;
+                margin-bottom: 20px;
+                /* Añadimos un pequeño margen abajo */
+            }
+
+            .sobre-mi-image {
+                margin-top: 10px;
+            }
+
+            .sobre-mi-image img {
+                width: 80%;
+                /* Reducción de la imagen para que ocupe menos espacio */
+                max-width: 400px;
+                /* Controlamos el tamaño máximo de la imagen */
+            }
+        }
+
+
+        /* Sección sobre mí */
+        #sobre-mi {
+            padding-top: 0;
+            /* Elimina padding superior si es necesario */
+            margin-top: 0;
+            /* Asegura que no haya margen extra arriba */
+        }
+
+        /* Contenido principal de la sección Sobre Mí */
+        #sobre-mi .sobre-mi-content {
+            margin-bottom: 20px;
+            /* Espacio entre el texto y los servicios */
+        }
+
+        /* Contenedor de servicios */
+        #sobre-mi .services-container {
+            margin-top: 20px;
+            /* Puedes ajustar este espacio según lo desees */
+        }
+
+        /* Ajusta el margen/padding de las cajas de servicio */
+        #sobre-mi .service-box {
+            margin-bottom: 15px;
+            /* Controla el espacio entre las cajas de servicio */
+        }
+
+        /* Estilo para la imagen dentro de la sección Sobre Mí (si la tienes) */
+        #sobre-mi .sobre-mi-image img {
+            width: 100%;
+            margin-top: 20px;
+            padding: 0;
+            display: block;
+        }
+
+
+        @media (max-width: 768px) {
+            .services-container {
+                flex-direction: column;
+                /* Cambia la dirección a vertical en pantallas pequeñas */
+                align-items: center;
+            }
+
+            .service-box {
+                width: 80%;
+                /* Cada caja ocupará el 80% del ancho del contenedor en pantallas pequeñas */
+                margin-top: 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="menu">
+        <a href="#inicio" class="menu-link" data-section="inicio">Inicio</a>
+        <a href="#sobre-mi" class="menu-link" data-section="sobre-mi">Sobre Mí</a>
+        <a href="#servicios" class="menu-link" data-section="servicios">Servicios</a>
+        <a href="#blog" class="menu-link" data-section="blog">Blog</a>
+    </nav>
+
+    <div id="inicio" class="section">Inicio</div>
+    <!-- Sección Sobre Mí -->
+    <div id="sobre-mi" class="section">
+        <!-- Contenido de la sección Sobre Mí -->
+        <div class="sobre-mi-content">
+            <h2>Sobre Mí</h2>
+            <p>Soy un profesional dedicado a ayudar a las personas a encontrar equilibrio y bienestar en sus vidas. Con
+                años de experiencia en el campo de la psicología, ofrezco un enfoque personalizado para cada individuo.
+            </p>
+        </div>
+
+        <!-- Servicios dentro de la sección Sobre Mí -->
+        <div class="services-container">
+            <h3>Mis Servicios</h3> <!-- Título para los servicios -->
+            <div class="service-box">
+                <i class="fitness-heartrate"></i>
+                <h2>Integradora</h2>
+                <a href="https://carlabaeza.com/psicoterapia-integradora/" target="_blank">Más información</a>
+            </div>
+            <div class="service-box">
+                <i class="fitness-heartrate"></i>
+                <h2>Personalizada</h2>
+                <a href="#">Más información</a>
+            </div>
+            <div class="service-box">
+                <i class="fitness-heartrate"></i>
+                <h2>Emocional</h2>
+                <a href="#">Más información</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="servicios" class="section">Servicios</div>
+    <div id="blog" class="section">Blog</div>
+
+    <script>
+        const sections = document.querySelectorAll(".section");
+        const menuLinks = document.querySelectorAll(".menu-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 80;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            menuLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("data-section") === current) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

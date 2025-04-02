@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú con Botón Sándwich</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            color: #706d82;
+        }
+
+        /* Estilos del menú */
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botón de menú sándwich */
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            color: #f4c2c2; /* Color de las líneas */
+            position: absolute;
+            right: 20px; /* Lo empuja completamente a la derecha */
+        }
+
+        .menu-links {
+            display: flex;
+        }
+
+        .menu-links a {
+            color: #706d82;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .menu-links a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background: #f4c2c2;
+        }
+
+        /* Secciones */
+        .section {
+            height: 100vh;
+            padding: 100px 20px;
+        }
+
+        #inicio {
+            background: white;
+        }
+
+        #sobre-mi {
+            background: #f4c2c2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .sobre-mi-content {
+            max-width: 40%;
+            margin-right: 20px;
+        }
+
+        .sobre-mi-content h2 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .sobre-mi-content p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .sobre-mi-image img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        #servicios {
+            background: white;
+        }
+
+        #blog {
+            background: #f4c2c2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            /* Botón sándwich visible en móviles */
+            .menu-toggle {
+                display: block;
+                font-size: 30px;
+                padding: 10px;
+                right: 20px;
+                background: white;
+                border: none;
+            }
+
+            /* Menú desplegable */
+            .menu-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 250px;
+                background: white;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                padding: 10px 0;
+            }
+
+            .menu-links a {
+                padding: 15px;
+                text-align: center;
+                display: block;
+            }
+
+            .menu-links.show {
+                display: flex;
+            }
+
+            /* Ajustes de "Sobre Mí" en móviles */
+            #sobre-mi {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+
+            .sobre-mi-content {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .sobre-mi-image img {
+                width: 80%;
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="menu">
+        <div class="menu-links">
+            <a href="#inicio" class="menu-link" data-section="inicio">Inicio</a>
+            <a href="#sobre-mi" class="menu-link" data-section="sobre-mi">Sobre Mí</a>
+            <a href="#servicios" class="menu-link" data-section="servicios">Servicios</a>
+            <a href="#blog" class="menu-link" data-section="blog">Blog</a>
+        </div>
+        <button class="menu-toggle">&#9776;</button> <!-- Botón hamburguesa con color ajustado -->
+    </nav>
+
+    <div id="inicio" class="section">Inicio</div>
+    <div id="sobre-mi" class="section">
+        <div class="sobre-mi-content">
+            <h2>Sobre Mí</h2>
+            <p>Soy un profesional dedicado a ayudar a las personas a encontrar equilibrio y bienestar en sus vidas. Con
+                años de experiencia en el campo de la psicología, ofrezco un enfoque personalizado para cada individuo.
+            </p>
+        </div>
+        <div class="sobre-mi-image">
+            <img src="/image/IMG_6436-600x800.jpg" alt="Imagen sobre mí">
+        </div>
+    </div>
+
+    <div id="servicios" class="section">Servicios</div>
+    <div id="blog" class="section">Blog</div>
+
+    <script>
+        // Activar clase "active" en el menú
+        const sections = document.querySelectorAll(".section");
+        const menuLinks = document.querySelectorAll(".menu-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 80;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            menuLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("data-section") === current) {
+                    link.classList.add("active");
+                }
+            });
+        });
+
+        // Script para el menú hamburguesa
+        const menuToggle = document.querySelector(".menu-toggle");
+        const menuLinksContainer = document.querySelector(".menu-links");
+
+        menuToggle.addEventListener("click", () => {
+            menuLinksContainer.classList.toggle("show");
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        menuLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                menuLinksContainer.classList.remove("show");
+            });
+        });
+    </script>
+</body>
+
+</html>
